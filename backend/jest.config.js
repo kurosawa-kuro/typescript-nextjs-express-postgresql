@@ -5,7 +5,7 @@ module.exports = {
   moduleNameMapper: {
     "^(\\.\\.?\\/.+)\\.jsx?$": "$1",
   },
-  roots: ["<rootDir>/src/"],
+  roots: ["."],
   verbose: true,
   collectCoverage: true,
   coverageReporters: ["html", "text"],
