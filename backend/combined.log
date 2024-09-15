@@ -159,3 +159,4 @@
 [32minfo[39m some service 2024-09-16 03:13:13: listening on port 3000
 [32minfo[39m some service 2024-09-16 03:13:32: Method: GET path: /users Status: 200
 [32minfo[39m some service 2024-09-16 03:13:36: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-16 03:24:27: listening on port 3000
