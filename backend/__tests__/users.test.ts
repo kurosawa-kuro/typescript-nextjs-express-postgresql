@@ -1,9 +1,9 @@
 import request from "supertest";
 import app from "../src/app";
 import { StatusCodes } from "http-status-codes";
-import { User } from "../src/schemas/users.schema.js";
-import userList from "../mockData/users.js";
-import { UsersServices } from "../src/services/users.service.js";
+import { User } from "../src/schemas/users.schema";
+import userList from "../mockData/users";
+import { UsersServices } from "../src/services/users.service";
 
 const requiredFields = ["id", "name", "lastName", "email", "birthDate"];
 const mockedUser = {
