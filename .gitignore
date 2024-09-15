@@ -36,7 +36,7 @@ yarn-error.log*
 next-env.d.ts
 backend/public/Images/*.*
 
-node_modules
+*/node_modules/*
 backend/node_modules/
 backend/.env
 backend_js/public/Images/*.*
