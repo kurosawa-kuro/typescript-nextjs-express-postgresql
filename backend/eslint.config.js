@@ -1,33 +1,51 @@
-// @ts-check
-
 import eslint from "@eslint/js";
-import tseslint from "typescript-eslint";
+import tseslint from "@typescript-eslint/eslint-plugin";
+import tseslintParser from "@typescript-eslint/parser";
 import prettierConfig from "eslint-config-prettier";
 
-export default tseslint.config(
+export default [
   eslint.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
-  ...tseslint.configs.stylisticTypeChecked,
-  prettierConfig,
   {
-    ignores: ["bin/*"],
-  },
-  {
+    files: ["**/*.ts"],
+    plugins: {
+      "@typescript-eslint": tseslint,
+    },
     languageOptions: {
+      parser: tseslintParser,
       parserOptions: {
-        project: true,
-        tsconfigRootDir: import.meta.dirname,
+        project: "./tsconfig.json",
+        ecmaVersion: 2022,
+        sourceType: "module",
+      },
+      globals: {
+        console: "readonly",
+        process: "readonly",
       },
     },
-  },
-  {
-    files: ["dist/**", "**/*.js", "**/*.cjs", "dist/*.js", "*.js", "*.cjs"],
-    ...tseslint.configs.disableTypeChecked,
-  },
-  {
     rules: {
+      ...tseslint.configs.recommended.rules,
       "@typescript-eslint/no-non-null-assertion": "off",
+      "no-undef": "off", // TypeScriptのコンパイラがこれを処理するため
     },
   },
-);
+  {
+    files: ["**/*.test.ts"],
+    languageOptions: {
+      globals: {
+        describe: "readonly",
+        test: "readonly",
+        expect: "readonly",
+        jest: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly",
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-unused-vars": "off",
+    },
+  },
+  prettierConfig,
+  {
+    ignores: ["dist/**", "node_modules/**"],
+  },
+];
