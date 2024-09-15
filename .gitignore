@@ -40,4 +40,4 @@ backend/public/Images/*.*
 backend/node_modules/
 backend/.env
 backend_js/public/Images/*.*
-backend/coverage/*.*
+backend/coverage/

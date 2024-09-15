@@ -33,3 +33,8 @@
 [31merror[39m some service 2024-09-16 00:58:35: Method: POST path: /users Status: 500 error: Test error
 [31merror[39m some service 2024-09-16 00:58:35: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
 [31merror[39m some service 2024-09-16 00:58:35: Method: DELETE path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:59:11: Method: GET path: /users Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:59:11: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:59:11: Method: POST path: /users Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:59:11: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:59:11: Method: DELETE path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
