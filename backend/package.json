@@ -1,17 +1,59 @@
 {
-  "name": "backend",
+  "name": "myprojectname",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "dev": "node index.js"
+  "type": "module",
+  "private": true,
+  "main": "src/index.ts",
+  "engines": {
+    "node": "20.11.1",
+    "npm": "10.2.4"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "scripts": {
+    "start:without:dotenv": "tsx --env-file .env src/index.ts",
+    "dev:without:dotenv": "tsx watch --env-file .env src",
+    "prod:without:dotenv": "node  --env-file .env dist/index.js",
+    "build": "tsc",
+    "start": "tsx dist/src/index.js",
+    "dev": "tsx watch src/index.ts",
+    "linter": "npx eslint src",
+    "prettier:check": "npx prettier . --check",
+    "prettier:write": "npx prettier . --write",
+    "prepare": "husky",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.21.0",
-    "multer": "^1.4.5-lts.1"
+    "dotenv": "^16.4.5",
+    "express": "^4.19.1",
+    "helmet": "^7.1.0",
+    "http-status-codes": "^2.3.0",
+    "uuid": "^9.0.1",
+    "winston": "^3.12.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.13",
+    "@types/node": "^20.11.30",
+    "@types/supertest": "^6.0.2",
+    "@types/uuid": "^9.0.8",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.0.11",
+    "jest": "^29.7.0",
+    "lint-staged": "^15.2.2",
+    "prettier": "3.2.5",
+    "supertest": "^6.3.4",
+    "ts-jest": "^29.1.2",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.3",
+    "typescript-eslint": "^7.4.0"
+  },
+  "lint-staged": {
+    "**/*": [
+      "eslint",
+      "npm run prettier:write"
+    ]
   }
 }

@@ -1,0 +1,15 @@
+[31merror[39m some service 2024-09-15 23:58:25: Method: GET path: /users Status: 500 error: Test error
+[31merror[39m some service 2024-09-15 23:58:25: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[31merror[39m some service 2024-09-15 23:58:25: Method: POST path: /users Status: 500 error: Test error
+[31merror[39m some service 2024-09-15 23:58:25: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[31merror[39m some service 2024-09-15 23:58:25: Method: DELETE path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:06:19: Method: GET path: /users Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:06:19: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:06:19: Method: POST path: /users Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:06:19: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:06:20: Method: DELETE path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:07:43: Method: GET path: /users Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:07:43: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:07:43: Method: POST path: /users Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:07:43: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 00:07:43: Method: DELETE path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error

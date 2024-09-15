@@ -1,0 +1,93 @@
+[32minfo[39m some service 2024-09-15 23:56:27: listening on port 3000
+[32minfo[39m some service 2024-09-15 23:57:00: Method: GET path: / Status: 200
+[32minfo[39m some service 2024-09-15 23:57:00: Method: GET path: / Status: 200
+[32minfo[39m some service 2024-09-15 23:58:25: Method: GET path: / Status: 200
+[32minfo[39m some service 2024-09-15 23:58:25: Method: GET path: /notfound Status: 200
+[32minfo[39m some service 2024-09-15 23:58:25: Method: GET path: / Status: 200
+[32minfo[39m some service 2024-09-15 23:58:25: Method: GET path: / Status: 200
+[31merror[39m some service 2024-09-15 23:58:25: Method: GET path: /users Status: 500 error: Test error
+[32minfo[39m some service 2024-09-15 23:58:25: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-15 23:58:25: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-15 23:58:25: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-15 23:58:25: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-15 23:58:25: Method: GET path: /users Status: 200
+[31merror[39m some service 2024-09-15 23:58:25: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[32minfo[39m some service 2024-09-15 23:58:25: Method: GET path: /users/2223b90d-c5f8-41ef-8162-53de1cffc44e Status: 404
+[32minfo[39m some service 2024-09-15 23:58:25: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-15 23:58:25: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-15 23:58:25: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-15 23:58:25: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[31merror[39m some service 2024-09-15 23:58:25: Method: POST path: /users Status: 500 error: Test error
+[32minfo[39m some service 2024-09-15 23:58:25: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-15 23:58:25: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-15 23:58:25: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-15 23:58:25: Method: POST path: /users Status: 201
+[31merror[39m some service 2024-09-15 23:58:25: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[32minfo[39m some service 2024-09-15 23:58:25: Method: PUT path: /users/2223b90d-c5f8-41ef-8162-53de1cffc44e Status: 404
+[32minfo[39m some service 2024-09-15 23:58:25: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-15 23:58:25: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-15 23:58:25: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-15 23:58:25: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[31merror[39m some service 2024-09-15 23:58:25: Method: DELETE path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[32minfo[39m some service 2024-09-15 23:58:25: Method: DELETE path: /users/2223b90d-c5f8-41ef-8162-53de1cffc44e Status: 404
+[32minfo[39m some service 2024-09-15 23:58:25: Method: DELETE path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 204
+[32minfo[39m some service 2024-09-16 00:06:19: Method: GET path: /notfound Status: 200
+[32minfo[39m some service 2024-09-16 00:06:19: Method: GET path: / Status: 200
+[32minfo[39m some service 2024-09-16 00:06:19: Method: GET path: / Status: 200
+[31merror[39m some service 2024-09-16 00:06:19: Method: GET path: /users Status: 500 error: Test error
+[32minfo[39m some service 2024-09-16 00:06:19: Method: GET path: / Status: 200
+[32minfo[39m some service 2024-09-16 00:06:19: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 00:06:19: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 00:06:19: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 00:06:19: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 00:06:19: Method: GET path: /users Status: 200
+[31merror[39m some service 2024-09-16 00:06:19: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[32minfo[39m some service 2024-09-16 00:06:19: Method: GET path: /users/2223b90d-c5f8-41ef-8162-53de1cffc44e Status: 404
+[32minfo[39m some service 2024-09-16 00:06:19: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 00:06:19: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 00:06:19: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 00:06:19: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[31merror[39m some service 2024-09-16 00:06:19: Method: POST path: /users Status: 500 error: Test error
+[32minfo[39m some service 2024-09-16 00:06:19: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-16 00:06:19: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-16 00:06:19: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-16 00:06:19: Method: POST path: /users Status: 201
+[31merror[39m some service 2024-09-16 00:06:19: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[32minfo[39m some service 2024-09-16 00:06:20: Method: PUT path: /users/2223b90d-c5f8-41ef-8162-53de1cffc44e Status: 404
+[32minfo[39m some service 2024-09-16 00:06:20: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 00:06:20: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 00:06:20: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 00:06:20: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[31merror[39m some service 2024-09-16 00:06:20: Method: DELETE path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[32minfo[39m some service 2024-09-16 00:06:20: Method: DELETE path: /users/2223b90d-c5f8-41ef-8162-53de1cffc44e Status: 404
+[32minfo[39m some service 2024-09-16 00:06:20: Method: DELETE path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 204
+[32minfo[39m some service 2024-09-16 00:07:43: Method: GET path: /notfound Status: 200
+[32minfo[39m some service 2024-09-16 00:07:43: Method: GET path: / Status: 200
+[32minfo[39m some service 2024-09-16 00:07:43: Method: GET path: / Status: 200
+[31merror[39m some service 2024-09-16 00:07:43: Method: GET path: /users Status: 500 error: Test error
+[32minfo[39m some service 2024-09-16 00:07:43: Method: GET path: / Status: 200
+[32minfo[39m some service 2024-09-16 00:07:43: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 00:07:43: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 00:07:43: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 00:07:43: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 00:07:43: Method: GET path: /users Status: 200
+[31merror[39m some service 2024-09-16 00:07:43: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[32minfo[39m some service 2024-09-16 00:07:43: Method: GET path: /users/2223b90d-c5f8-41ef-8162-53de1cffc44e Status: 404
+[32minfo[39m some service 2024-09-16 00:07:43: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 00:07:43: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 00:07:43: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 00:07:43: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[31merror[39m some service 2024-09-16 00:07:43: Method: POST path: /users Status: 500 error: Test error
+[32minfo[39m some service 2024-09-16 00:07:43: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-16 00:07:43: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-16 00:07:43: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-16 00:07:43: Method: POST path: /users Status: 201
+[31merror[39m some service 2024-09-16 00:07:43: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[32minfo[39m some service 2024-09-16 00:07:43: Method: PUT path: /users/2223b90d-c5f8-41ef-8162-53de1cffc44e Status: 404
+[32minfo[39m some service 2024-09-16 00:07:43: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 00:07:43: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 00:07:43: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 00:07:43: Method: PUT path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[31merror[39m some service 2024-09-16 00:07:43: Method: DELETE path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[32minfo[39m some service 2024-09-16 00:07:43: Method: DELETE path: /users/2223b90d-c5f8-41ef-8162-53de1cffc44e Status: 404
+[32minfo[39m some service 2024-09-16 00:07:43: Method: DELETE path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 204
