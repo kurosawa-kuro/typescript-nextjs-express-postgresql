@@ -1,12 +1,10 @@
 import { Router } from "express";
-import { UsersControllers } from "../controllers/users.controller.js";
-import validationMiddleware from "../utils/validation.middleware.js";
+import { UsersControllers } from "../controllers/users.controller";
+import validationMiddleware from "../utils/validation.middleware";
 import {
   usersSchemaCreate,
   usersSchemaGet,
-  usersSchemaUpdate,
-  usersSchemaDelete,
-} from "../schemas/users.schema.js";
+} from "../schemas/users.schema";
 
 const router = Router();
 
@@ -23,19 +21,6 @@ router.post(
   [validationMiddleware(usersSchemaCreate)],
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   UsersControllers.createOne,
-);
-router.put(
-  "/:id",
-  [validationMiddleware(usersSchemaUpdate)],
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  UsersControllers.updateOne,
-);
-
-router.delete(
-  "/:id",
-  [validationMiddleware(usersSchemaDelete)],
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  UsersControllers.deleteOne,
 );
 
 export default router;

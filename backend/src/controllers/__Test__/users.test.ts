@@ -1,9 +1,9 @@
 import request from "supertest";
-import app from "../src/app";
+import app from "../../app";
 import { StatusCodes } from "http-status-codes";
-import { User } from "../src/schemas/users.schema";
-import userList from "../mockData/users";
-import { UsersServices } from "../src/services/users.service";
+import { User } from "../../schemas/users.schema";
+import userList from "../../mockData/users";
+import { UsersServices } from "../../services/users.service";
 
 const requiredFields = ["id", "name", "lastName", "email", "birthDate"];
 const mockedUser = {
@@ -22,8 +22,6 @@ afterEach(() => {
   jest.spyOn(UsersServices, "getData").mockRestore();
   jest.spyOn(UsersServices, "getOneData").mockRestore();
   jest.spyOn(UsersServices, "createOne").mockRestore();
-  jest.spyOn(UsersServices, "updateOne").mockRestore();
-  jest.spyOn(UsersServices, "deleteOne").mockRestore();
 });
 
 describe("GET wrong path /notfound", function () {
@@ -169,106 +167,6 @@ describe("POST path /users", function () {
       expect(requiredFields).toEqual(
         expect.arrayContaining(Object.keys(userReceived)),
       );
-    });
-  });
-});
-
-describe("PUT path /users", function () {
-  test("should handle error in PUT and give status code 500", async () => {
-    jest
-      .spyOn(UsersServices, "updateOne")
-      .mockRejectedValue(new Error("Test error"));
-    const response = await request(app)
-      .put("/users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3")
-      .send(mockedUser);
-    expect(response.status).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
-  });
-  describe("With invalid or unexisting id", function () {
-    test("should respond with status code 400, wrong ID", async () => {
-      const response = await request(app).put("/users/999999");
-      expect(response.status).toEqual(StatusCodes.BAD_REQUEST);
-    });
-    test("should respond with status code 400, wrong fields", async () => {
-      const response = await request(app)
-        .put("/users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3")
-        .send(mockedUserWithWrongData);
-      expect(response.status).toEqual(StatusCodes.BAD_REQUEST);
-      expect(response.body).not.toEqual({});
-    });
-    test("should respond with status code 404 (not found)", async () => {
-      const response = await request(app)
-        .put("/users/2223b90d-c5f8-41ef-8162-53de1cffc44e")
-        .send(mockedUser);
-      expect(response.status).toEqual(StatusCodes.NOT_FOUND);
-      expect(response.body).toEqual({});
-    });
-  });
-  describe("With valid id", function () {
-    test("should respond with status code 200", async () => {
-      const response = await request(app)
-        .put("/users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3")
-        .send(mockedUser);
-      expect(response.status).toEqual(StatusCodes.OK);
-    });
-    test("should respond in json format", async () => {
-      const response = await request(app)
-        .put("/users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3")
-        .send(mockedUser);
-      expect(response.headers["content-type"]).toMatch(/json/);
-    });
-    test("should respond with all the required properties", async () => {
-      const response = await request(app)
-        .put("/users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3")
-        .send(mockedUser);
-      const userReceived = response.body as User;
-      expect(Object.keys(userReceived)).toEqual(
-        expect.arrayContaining(requiredFields),
-      );
-    });
-    test("should respond only required fields", async () => {
-      const response = await request(app)
-        .put("/users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3")
-        .send(mockedUser);
-      const userReceived = response.body as User;
-      expect(requiredFields).toEqual(
-        expect.arrayContaining(Object.keys(userReceived)),
-      );
-    });
-  });
-});
-
-describe("DELETE path /users", function () {
-  test("should handle error in DELETE and give status code 500", async () => {
-    jest
-      .spyOn(UsersServices, "deleteOne")
-      .mockRejectedValue(new Error("Test error"));
-    const response = await request(app).delete(
-      "/users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3",
-    );
-    expect(response.status).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
-  });
-  describe("With invalid or unexisting id", function () {
-    test("should respond with status code 400, wrong ID", async () => {
-      const response = await request(app).delete("/users/999999");
-      expect(response.status).toEqual(StatusCodes.BAD_REQUEST);
-    });
-    test("should respond with status code 404 (not found)", async () => {
-      const response = await request(app).delete(
-        "/users/2223b90d-c5f8-41ef-8162-53de1cffc44e",
-      );
-      expect(response.status).toEqual(StatusCodes.NOT_FOUND);
-    });
-  });
-  describe("With valid id", function () {
-    test("should respond with status code 204", async () => {
-      const response = await request(app).delete(
-        "/users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3",
-      );
-      const result = userList.some(
-        (user) => user.id === "cb8e7129-ce80-4cc1-8351-11a2d7350cd3",
-      );
-      expect(result).toEqual(false);
-      expect(response.status).toEqual(StatusCodes.NO_CONTENT);
     });
   });
 });

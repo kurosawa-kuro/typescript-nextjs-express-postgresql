@@ -1,7 +1,7 @@
 import { type Request, type Response, type NextFunction } from "express";
-import { UsersServices } from "../services/users.service.js";
+import { UsersServices } from "../services/users.service";
 import { StatusCodes } from "http-status-codes";
-import { User } from "../schemas/users.schema.js";
+import { User } from "../schemas/users.schema";
 
 export async function get(
   req: Request,
@@ -9,6 +9,8 @@ export async function get(
   next: NextFunction,
 ): Promise<void> {
   try {
+console.log('get')
+
     const result = (await UsersServices.getData()).data;
     res.status(StatusCodes.OK).json(result);
     next();
@@ -50,48 +52,9 @@ export async function createOne(
   }
 }
 
-export async function updateOne(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
-  try {
-    const id: string = req.params.id;
-    const result = (await UsersServices.updateOne(id, req.body as User)).data;
-    if (!result) {
-      res.status(StatusCodes.NOT_FOUND).json({});
-    } else {
-      res.status(StatusCodes.OK).json(result);
-    }
-    next();
-  } catch (err) {
-    next(err);
-  }
-}
-
-export async function deleteOne(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
-  try {
-    const id: string = req.params.id;
-    const result = (await UsersServices.deleteOne(id)).data;
-    if (!result) {
-      res.status(StatusCodes.NOT_FOUND);
-    } else {
-      res.status(StatusCodes.NO_CONTENT).json();
-    }
-    next();
-  } catch (err) {
-    next(err);
-  }
-}
 
 export const UsersControllers = {
   get,
   getOne,
   createOne,
-  updateOne,
-  deleteOne,
 };

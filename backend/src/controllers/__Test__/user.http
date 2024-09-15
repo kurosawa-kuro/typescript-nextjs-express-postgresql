@@ -1,0 +1,57 @@
+### Variables
+@baseUrl = http://localhost:3000
+@contentType = application/json
+
+### Get all users
+GET {{baseUrl}}/users
+Content-Type: {{contentType}}
+
+### Get a specific user
+GET {{baseUrl}}/users/1
+Content-Type: {{contentType}}
+
+### Create a new user
+POST {{baseUrl}}/users
+Content-Type: {{contentType}}
+
+{
+    "name": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "birthDate": "1990-01-01T00:00:00Z"
+}
+
+### Invalid request - Get user with invalid ID
+GET {{baseUrl}}/users/invalid
+Content-Type: {{contentType}}
+
+### Invalid request - Create user with missing required fields
+POST {{baseUrl}}/users
+Content-Type: {{contentType}}
+
+{
+    "name": "Jane",
+    "email": "jane.doe@example.com"
+}
+
+### Invalid request - Create user with invalid email
+POST {{baseUrl}}/users
+Content-Type: {{contentType}}
+
+{
+    "name": "Alice",
+    "lastName": "Johnson",
+    "email": "invalid-email",
+    "birthDate": "1985-05-15T00:00:00Z"
+}
+
+### Invalid request - Create user with invalid date format
+POST {{baseUrl}}/users
+Content-Type: {{contentType}}
+
+{
+    "name": "Bob",
+    "lastName": "Smith",
+    "email": "bob.smith@example.com",
+    "birthDate": "1988-12-31"
+}

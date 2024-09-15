@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import { User } from "../schemas/users.schema.js";
-import userList from "../../mockData/users.js";
+import { User } from "../schemas/users.schema";
+import userList from "../mockData/users";
 
 interface Result {
   data: User[] | User | string | null;
@@ -28,34 +28,9 @@ export function createOne(user: User): Promise<Result> {
   });
 }
 
-export function updateOne(id: string, userToUpdate: User): Promise<Result> {
-  return new Promise((resolve) => {
-    const userIndex = userList.findIndex((user) => user.id === id);
-    if (userIndex < 0) {
-      return resolve({ data: null });
-    }
-    userToUpdate.id = id;
-    const { id: idToUpdate, ...restOfData } = userToUpdate;
-    userList[userIndex] = { id: idToUpdate, ...restOfData };
-    return resolve({ data: userList[userIndex] });
-  });
-}
-
-export function deleteOne(id: string): Promise<Result> {
-  return new Promise((resolve) => {
-    const userIndex = userList.findIndex((user) => user.id === id);
-    if (userIndex < 0) {
-      return resolve({ data: null });
-    }
-    userList.splice(userIndex, 1);
-    return resolve({ data: "Removed" });
-  });
-}
 
 export const UsersServices = {
   getData,
   getOneData,
   createOne,
-  updateOne,
-  deleteOne,
 };
