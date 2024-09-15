@@ -1,51 +1,33 @@
+// @ts-check
+
 import eslint from "@eslint/js";
-import tseslint from "@typescript-eslint/eslint-plugin";
-import tseslintParser from "@typescript-eslint/parser";
+import tseslint from "typescript-eslint";
 import prettierConfig from "eslint-config-prettier";
 
-export default [
+export default tseslint.config(
   eslint.configs.recommended,
-  {
-    files: ["**/*.ts"],
-    plugins: {
-      "@typescript-eslint": tseslint,
-    },
-    languageOptions: {
-      parser: tseslintParser,
-      parserOptions: {
-        project: "./tsconfig.json",
-        ecmaVersion: 2022,
-        sourceType: "module",
-      },
-      globals: {
-        console: "readonly",
-        process: "readonly",
-      },
-    },
-    rules: {
-      ...tseslint.configs.recommended.rules,
-      "@typescript-eslint/no-non-null-assertion": "off",
-      "no-undef": "off", // TypeScriptのコンパイラがこれを処理するため
-    },
-  },
-  {
-    files: ["**/*.test.ts"],
-    languageOptions: {
-      globals: {
-        describe: "readonly",
-        test: "readonly",
-        expect: "readonly",
-        jest: "readonly",
-        beforeEach: "readonly",
-        afterEach: "readonly",
-      },
-    },
-    rules: {
-      "@typescript-eslint/no-unused-vars": "off",
-    },
-  },
+  ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.stylisticTypeChecked,
   prettierConfig,
   {
-    ignores: ["dist/**", "node_modules/**"],
+    ignores: ["bin/*"],
   },
-];
+  {
+    languageOptions: {
+      parserOptions: {
+        project: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+  {
+    files: ["dist/**", "**/*.js", "**/*.cjs", "dist/*.js", "*.js", "*.cjs"],
+    ...tseslint.configs.disableTypeChecked,
+  },
+  {
+    rules: {
+      "@typescript-eslint/no-non-null-assertion": "off",
+    },
+  },
+);

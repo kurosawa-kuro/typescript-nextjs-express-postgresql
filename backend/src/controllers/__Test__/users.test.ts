@@ -50,7 +50,7 @@ describe("GET path /users", function () {
   test("should respond an array with more than one element", async () => {
     const response = await request(app).get("/users");
     expect(Array.isArray(response.body)).toBe(true);
-     
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     expect(response.body.length).toBeGreaterThanOrEqual(1);
   });
   test("should respond with all the required properties", async () => {

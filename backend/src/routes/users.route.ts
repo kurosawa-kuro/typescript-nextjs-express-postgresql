@@ -8,18 +8,18 @@ import {
 
 const router = Router();
 
- 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 router.get("/", UsersControllers.get);
 router.get(
   "/:id",
   [validationMiddleware(usersSchemaGet)],
-   
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   UsersControllers.getOne,
 );
 router.post(
   "/",
   [validationMiddleware(usersSchemaCreate)],
-   
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   UsersControllers.createOne,
 );
 

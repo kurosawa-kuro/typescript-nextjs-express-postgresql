@@ -9,6 +9,7 @@ export async function get(
   next: NextFunction,
 ): Promise<void> {
   try {
+console.log('get')
 
     const result = (await UsersServices.getData()).data;
     res.status(StatusCodes.OK).json(result);
