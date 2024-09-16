@@ -330,3 +330,41 @@
 [32minfo[39m some service 2024-09-16 14:10:08: listening on port 3000
 [32minfo[39m some service 2024-09-16 14:10:22: listening on port 3000
 [32minfo[39m some service 2024-09-16 14:10:32: listening on port 3000
+[32minfo[39m some service 2024-09-16 14:13:55: listening on port 3000
+[32minfo[39m some service 2024-09-16 14:14:07: listening on port 3000
+[32minfo[39m some service 2024-09-16 14:14:36: listening on port 3000
+[32minfo[39m some service 2024-09-16 14:15:00: listening on port 3000
+[32minfo[39m some service 2024-09-16 14:15:09: listening on port 3000
+[32minfo[39m some service 2024-09-16 14:16:10: listening on port 3000
+[32minfo[39m some service 2024-09-16 14:16:17: listening on port 3000
+[32minfo[39m some service 2024-09-16 14:18:33: listening on port 3000
+[32minfo[39m some service 2024-09-16 14:18:51: listening on port 3000
+[32minfo[39m some service 2024-09-16 14:19:08: listening on port 3000
+[32minfo[39m some service 2024-09-16 14:19:18: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 14:19:23: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-16 14:19:27: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 14:21:40: Method: GET path: /notfound Status: 200
+[32minfo[39m some service 2024-09-16 14:21:40: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 14:21:40: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 14:21:40: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 14:21:40: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 14:21:40: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 14:21:40: Method: GET path: /users Status: 200
+[32minfo[39m some service 2024-09-16 14:21:40: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 14:21:40: Method: GET path: /users/2223b90d-c5f8-41ef-8162-53de1cffc44e Status: 404
+[32minfo[39m some service 2024-09-16 14:21:40: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 14:21:40: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 14:21:40: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 14:21:40: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 200
+[32minfo[39m some service 2024-09-16 14:21:40: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-16 14:21:40: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-16 14:21:40: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-16 14:21:40: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-16 14:21:40: Method: POST path: /users Status: 201
+[32minfo[39m some service 2024-09-16 14:25:04: Method: GET path: /notfound Status: 200
+[32minfo[39m some service 2024-09-16 14:26:35: Method: GET path: /notfound Status: 200
+[32minfo[39m some service 2024-09-16 14:29:12: Method: GET path: /notfound Status: 200
+[32minfo[39m some service 2024-09-16 14:30:02: Method: GET path: /notfound Status: 200
+[32minfo[39m some service 2024-09-16 14:32:17: Method: GET path: /notfound Status: 200
+[32minfo[39m some service 2024-09-16 14:34:44: Method: GET path: /notfound Status: 200
+[32minfo[39m some service 2024-09-16 14:36:30: Method: GET path: /notfound Status: 200

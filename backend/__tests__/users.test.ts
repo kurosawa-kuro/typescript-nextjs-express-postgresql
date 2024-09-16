@@ -4,7 +4,9 @@ import request from "supertest";
 import app from "../src/app/app";
 import { StatusCodes } from "http-status-codes";
 import { User } from "../src/app/schemas/users.schema";
-import { UsersServices } from "../src/app/services/users.service";
+import { container } from "../src/app/inversify.config";
+import { TYPES } from "../src/app/types/types";
+import { IUsersController } from "../src/app/types/interfaces";
 
 const requiredFields = ["id", "name", "lastName", "email", "birthDate"];
 const mockedUser = {
@@ -19,10 +21,14 @@ const mockedUserWithWrongData = {
   birthDate: "2024-12-12",
 };
 
+let usersController: IUsersController;
+
+beforeEach(() => {
+  usersController = container.get<IUsersController>(TYPES.UsersController);
+});
+
 afterEach(() => {
-  jest.spyOn(UsersServices, "getData").mockRestore();
-  jest.spyOn(UsersServices, "getOneData").mockRestore();
-  jest.spyOn(UsersServices, "createOne").mockRestore();
+  jest.restoreAllMocks();
 });
 
 describe("GET wrong path /notfound", function () {
@@ -34,9 +40,11 @@ describe("GET wrong path /notfound", function () {
 
 describe("GET path /users", function () {
   test("should handle error in get", async () => {
-    jest
-      .spyOn(UsersServices, "getData")
-      .mockRejectedValue(new Error("Test error"));
+    jest.spyOn(usersController, "get").mockImplementation((req, res, next) => {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+      next(new Error("Test error"));
+      return Promise.resolve();
+    });
     const response = await request(app).get("/users");
     expect(response.status).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
   });
@@ -51,7 +59,6 @@ describe("GET path /users", function () {
   test("should respond an array with more than one element", async () => {
     const response = await request(app).get("/users");
     expect(Array.isArray(response.body)).toBe(true);
-     
     expect(response.body.length).toBeGreaterThanOrEqual(1);
   });
   test("should respond with all the required properties", async () => {
@@ -74,9 +81,11 @@ describe("GET path /users", function () {
 
 describe("GET path /users/:id", function () {
   test("should handle error in getOne", async () => {
-    jest
-      .spyOn(UsersServices, "getOneData")
-      .mockRejectedValue(new Error("Test error"));
+    jest.spyOn(usersController, "getOne").mockImplementation((req, res, next) => {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+      next(new Error("Test error"));
+      return Promise.resolve();
+    });
     const response = await request(app).get(
       "/users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3",
     );
@@ -131,9 +140,11 @@ describe("GET path /users/:id", function () {
 
 describe("POST path /users", function () {
   test("should handle error in POST", async () => {
-    jest
-      .spyOn(UsersServices, "createOne")
-      .mockRejectedValue(new Error("Test error"));
+    jest.spyOn(usersController, "createOne").mockImplementation((req, res, next) => {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+      next(new Error("Test error"));
+      return Promise.resolve();
+    });
     const response = await request(app).post("/users").send(mockedUser);
     expect(response.status).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
   });

@@ -1,5 +1,6 @@
-// backend\src\app\app.ts
+// backend/src/app/app.ts
 
+import "reflect-metadata";
 import express from "express";
 import router from "@/app/routes/index.route";
 import loggerMiddleware from "@/app/utils/logger";

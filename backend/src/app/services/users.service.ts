@@ -1,38 +1,24 @@
-// backend\src\app\services\users.service.ts
-
+import { injectable } from "inversify";
 import { v4 as uuidv4 } from "uuid";
 import { User } from "@/app/schemas/users.schema";
 import userList from "@/app/mockData/users";
+import { IUsersService } from "@/app/types/interfaces";
 
-interface Result {
-  data: User[] | User | string | null;
-}
+@injectable()
+export class UsersService implements IUsersService {
+  public async getData(): Promise<User[]> {
+    return userList;
+  }
 
-export function getData(): Promise<Result> {
-  return new Promise((resolve) => {
-    return resolve({ data: userList });
-  });
-}
-
-export function getOneData(id: string): Promise<Result> {
-  return new Promise((resolve) => {
+  public async getOneData(id: string): Promise<User | null> {
     const userResult = userList.find((user) => user.id === id);
-    return resolve({ data: !userResult ? null : userResult });
-  });
-}
+    return userResult || null;
+  }
 
-export function createOne(user: User): Promise<Result> {
-  return new Promise((resolve) => {
+  public async createOne(user: User): Promise<User> {
     user.id = uuidv4();
     const { id, ...restOfData } = user;
     userList.push({ id, ...restOfData });
-    return resolve({ data: userList[userList.length - 1] });
-  });
+    return userList[userList.length - 1];
+  }
 }
-
-
-export const UsersServices = {
-  getData,
-  getOneData,
-  createOne,
-};
