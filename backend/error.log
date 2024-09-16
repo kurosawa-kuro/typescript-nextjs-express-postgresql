@@ -34,3 +34,6 @@
 [31merror[39m some service 2024-09-16 03:35:01: Method: GET path: /users Status: 500 error: Test error
 [31merror[39m some service 2024-09-16 03:35:02: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
 [31merror[39m some service 2024-09-16 03:35:02: Method: POST path: /users Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 13:01:10: Method: GET path: /users Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 13:01:10: Method: GET path: /users/cb8e7129-ce80-4cc1-8351-11a2d7350cd3 Status: 500 error: Test error
+[31merror[39m some service 2024-09-16 13:01:10: Method: POST path: /users Status: 500 error: Test error
