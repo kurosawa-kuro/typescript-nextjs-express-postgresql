@@ -1,3 +1,5 @@
+// backend\src\app\index.ts
+
 import "dotenv/config";
 import app from "@/app/app";
 import { logger } from "@/app/utils/logger";
