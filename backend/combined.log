@@ -374,3 +374,4 @@
 [31merror[39m some service 2024-09-16 14:46:42: [404] User not found - GET /users/2223b90d-c5f8-41ef-8162-53de1cffc44e
 [32minfo[39m some service 2024-09-16 14:47:15: Method: GET path: /notfound Status: 200
 [31merror[39m some service 2024-09-16 14:47:16: [404] User not found - GET /users/2223b90d-c5f8-41ef-8162-53de1cffc44e
+[31merror[39m some service 2024-09-16 15:07:22: [404] User not found - GET /users/00000000-0000-0000-0000-000000000000
