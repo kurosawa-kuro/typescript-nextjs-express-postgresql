@@ -41,3 +41,4 @@ backend/node_modules/
 backend/.env
 backend_js/public/Images/*.*
 backend/coverage/
+todo.ini
