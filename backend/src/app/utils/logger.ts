@@ -7,6 +7,7 @@ const logFormat = winston.format.printf(
   ({ timestamp, level, message, service }) =>
     `${level} ${service} ${timestamp}: ${message}`,
 );
+
 export const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
