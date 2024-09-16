@@ -42,3 +42,5 @@ backend/.env
 backend_js/public/Images/*.*
 backend/coverage/
 todo.ini
+backend/error.log
+backend/combined.log
