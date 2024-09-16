@@ -94,15 +94,4 @@ describe('errorMiddleware', () => {
 
     process.env.NODE_ENV = originalNodeEnv;
   });
-
-  it('should log console messages', () => {
-    const error = new Error('Console log test');
-    errorMiddleware(error, mockRequest as Request, mockResponse as Response, mockNext);
-
-    expect(console.log).toHaveBeenCalledWith('Entering errorMiddleware');
-    expect(console.log).toHaveBeenCalledWith('Error:', error);
-    expect(console.log).toHaveBeenCalledWith(`Setting response status to ${StatusCodes.INTERNAL_SERVER_ERROR}`);
-    expect(console.log).toHaveBeenCalledWith('Response body:', expect.any(Object));
-    expect(console.log).toHaveBeenCalledWith('Exiting errorMiddleware');
-  });
 });

@@ -5,4 +5,4 @@ const TYPES = {
     UsersController: Symbol.for("UsersController"),
   };
   
-  export { TYPES };
+export { TYPES };

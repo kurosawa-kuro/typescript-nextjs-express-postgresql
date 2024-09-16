@@ -19,13 +19,8 @@ export default function errorMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  console.log("Entering errorMiddleware");
-  console.log("Error:", err);
-
   const statusCode = (err as AppError).statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
   const message = err.message || ReasonPhrases.INTERNAL_SERVER_ERROR;
-
-  console.log(`Setting response status to ${statusCode}`);
 
   res.status(statusCode).json({
     error: {
@@ -35,14 +30,5 @@ export default function errorMiddleware(
     }
   });
 
-  console.log("Response body:", {
-    error: {
-      message,
-      status: statusCode,
-      stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
-    }
-  });
-
   logger.error(`[${statusCode}] ${message} - ${req.method} ${req.url}`);
-  console.log("Exiting errorMiddleware");
 }
