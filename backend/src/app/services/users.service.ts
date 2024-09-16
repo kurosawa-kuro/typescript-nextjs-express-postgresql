@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import { User } from "../schemas/users.schema";
-import userList from "../mockData/users";
+import { User } from "@/app/schemas/users.schema";
+import userList from "@/app/mockData/users";
 
 interface Result {
   data: User[] | User | string | null;

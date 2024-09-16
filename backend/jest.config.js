@@ -3,7 +3,7 @@ module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
   moduleNameMapper: {
-    "^(\\.\\.?\\/.+)\\.jsx?$": "$1",
+    "^@/(.*)$": "<rootDir>/src/$1"
   },
   roots: ["."],
   verbose: true,
