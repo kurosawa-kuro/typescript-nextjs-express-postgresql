@@ -5,23 +5,28 @@ import { Request, Response, NextFunction } from 'express';
 import { logger, default as loggerMiddleware } from '@/app/utils/logger';
 
 // Mockオブジェクトを作成
-jest.mock('winston', () => ({
-  format: {
-    printf: jest.fn(),
-    combine: jest.fn(),
-    timestamp: jest.fn(),
-    colorize: jest.fn(),
-    json: jest.fn(),
-  },
-  createLogger: jest.fn(() => ({
-    info: jest.fn(),
-    add: jest.fn(),
-  })),
-  transports: {
-    File: jest.fn(),
-    Console: jest.fn(),
-  },
-}));
+jest.mock('winston', () => {
+  const actualWinston = jest.requireActual('winston');
+  return {
+    ...actualWinston,
+    format: {
+      ...actualWinston.format,
+      printf: jest.fn(actualWinston.format.printf),
+      combine: jest.fn(),
+      timestamp: jest.fn(),
+      colorize: jest.fn(),
+      json: jest.fn(),
+    },
+    createLogger: jest.fn(() => ({
+      info: jest.fn(),
+      add: jest.fn(),
+    })),
+    transports: {
+      File: jest.fn(),
+      Console: jest.fn(),
+    },
+  };
+});
 
 describe('logger', () => {
   it('should create a logger with correct configuration', () => {
@@ -42,6 +47,21 @@ describe('logger', () => {
     expect(logger.add).toHaveBeenCalled();
 
     process.env.NODE_ENV = originalNodeEnv;
+  });
+
+  it('should format log messages correctly', () => {
+    // Get the printf format function
+    const printfFn = (winston.format.printf as jest.Mock).mock.calls[0][0];
+
+    // Test the format function
+    const formattedMessage = printfFn({
+      timestamp: '2023-05-20 10:30:00',
+      level: 'info',
+      message: 'Test message',
+      service: 'test-service'
+    });
+
+    expect(formattedMessage).toBe('info test-service 2023-05-20 10:30:00: Test message');
   });
 });
 
