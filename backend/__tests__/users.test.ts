@@ -2,7 +2,6 @@ import request from "supertest";
 import app from "../src/app/app";
 import { StatusCodes } from "http-status-codes";
 import { User } from "../src/app/schemas/users.schema";
-import userList from "../src/app/mockData/users";
 import { UsersServices } from "../src/app/services/users.service";
 
 const requiredFields = ["id", "name", "lastName", "email", "birthDate"];

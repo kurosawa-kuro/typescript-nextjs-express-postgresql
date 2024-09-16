@@ -3,7 +3,7 @@ import { UsersServices } from "../services/users.service";
 import { StatusCodes } from "http-status-codes";
 import { User } from "../schemas/users.schema";
 
-export async function get(
+async function get(
   req: Request,
   res: Response,
   next: NextFunction,
@@ -17,7 +17,7 @@ export async function get(
   }
 }
 
-export async function getOne(
+async function getOne(
   req: Request,
   res: Response,
   next: NextFunction,
@@ -36,7 +36,7 @@ export async function getOne(
   }
 }
 
-export async function createOne(
+async function createOne(
   req: Request,
   res: Response,
   next: NextFunction,
@@ -49,7 +49,6 @@ export async function createOne(
     next(err);
   }
 }
-
 
 export const UsersControllers = {
   get,
