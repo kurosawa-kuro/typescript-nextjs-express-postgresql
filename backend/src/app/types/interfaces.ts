@@ -1,12 +1,12 @@
 // backend/src/app/types/interfaces.ts
 
 import { type Request, type Response, type NextFunction } from "express";
-import { User } from "@/app/schemas/users.schema";
+import { User } from "@prisma/client";
 
 export interface IUsersService {
   getData(): Promise<User[]>;
   getOneData(id: string): Promise<User | null>;
-  createOne(user: User): Promise<User>;
+  createOne(user: Omit<User, "id" | "created_at" | "updated_at">): Promise<User>;
 }
 
 export interface IUsersController {

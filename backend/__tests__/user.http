@@ -15,10 +15,11 @@ POST {{baseUrl}}/users
 Content-Type: {{contentType}}
 
 {
-    "name": "John",
-    "lastName": "Doe",
-    "email": "john.doe@example.com",
-    "birthDate": "1990-01-01T00:00:00Z"
+    "name": "John Doe",
+    "email": "john.doe2@example.com",
+    "password_hash": "hashedpassword123",
+    "is_admin": false,
+    "memo": "New user"
 }
 
 ### Invalid request - Get user with invalid ID
@@ -30,7 +31,7 @@ POST {{baseUrl}}/users
 Content-Type: {{contentType}}
 
 {
-    "name": "Jane",
+    "name": "Jane Doe",
     "email": "jane.doe@example.com"
 }
 
@@ -39,19 +40,31 @@ POST {{baseUrl}}/users
 Content-Type: {{contentType}}
 
 {
-    "name": "Alice",
-    "lastName": "Johnson",
+    "name": "Alice Johnson",
     "email": "invalid-email",
-    "birthDate": "1985-05-15T00:00:00Z"
+    "password_hash": "hashedpassword456",
+    "is_admin": false
 }
 
-### Invalid request - Create user with invalid date format
+### Invalid request - Create user with invalid password_hash (too short)
 POST {{baseUrl}}/users
 Content-Type: {{contentType}}
 
 {
-    "name": "Bob",
-    "lastName": "Smith",
+    "name": "Bob Smith",
     "email": "bob.smith@example.com",
-    "birthDate": "1988-12-31"
+    "password_hash": "short",
+    "is_admin": true
+}
+
+### Valid request - Create user with all fields including optional ones
+POST {{baseUrl}}/users
+Content-Type: {{contentType}}
+
+{
+    "name": "Charlie Brown",
+    "email": "charlie.brown@example.com",
+    "password_hash": "hashedpassword789",
+    "is_admin": true,
+    "memo": "Admin user with additional notes"
 }

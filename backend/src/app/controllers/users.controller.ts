@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 import { TYPES } from "@/app/types/types";
 import { IUsersService, IUsersController } from "@/app/types/interfaces";
-import { User } from "@/app/schemas/users.schema";
+import { User } from "@prisma/client";
 import { AppError } from "@/app/utils/errorMiddleware";
 
 @injectable()
@@ -36,7 +36,7 @@ export class UsersController implements IUsersController {
 
   public async createOne(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const result = await this.usersService.createOne(req.body as User);
+      const result = await this.usersService.createOne(req.body);
       res.status(StatusCodes.CREATED).json(result);
     } catch (err) {
       next(new AppError((err as Error).message, StatusCodes.INTERNAL_SERVER_ERROR));

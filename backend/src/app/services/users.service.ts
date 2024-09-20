@@ -1,24 +1,25 @@
+// backend/src/app/services/users.service.ts
+
 import { injectable } from "inversify";
-import { v4 as uuidv4 } from "uuid";
-import { User } from "@/app/schemas/users.schema";
-import userList from "@/app/mockData/users";
+import { User } from "@prisma/client";
 import { IUsersService } from "@/app/types/interfaces";
+import { db } from "../../../prisma/prismaClient";
 
 @injectable()
 export class UsersService implements IUsersService {
   public async getData(): Promise<User[]> {
-    return userList;
+    return db.user.findMany();
   }
 
   public async getOneData(id: string): Promise<User | null> {
-    const userResult = userList.find((user) => user.id === id);
-    return userResult || null;
+    return db.user.findUnique({
+      where: { id: parseInt(id) },
+    });
   }
 
-  public async createOne(user: User): Promise<User> {
-    user.id = uuidv4();
-    const { id, ...restOfData } = user;
-    userList.push({ id, ...restOfData });
-    return userList[userList.length - 1];
+  public async createOne(user: Omit<User, "id" | "created_at" | "updated_at">): Promise<User> {
+    return db.user.create({
+      data: user,
+    });
   }
 }
