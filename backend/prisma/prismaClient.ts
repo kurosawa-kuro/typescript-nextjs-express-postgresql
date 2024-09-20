@@ -1,26 +1,26 @@
-// backend/prisma/prismaClient.ts
-
-// External Imports
 import { PrismaClient } from "@prisma/client";
 
 declare global {
   var __db: PrismaClient | undefined;
-  namespace NodeJS {
-    interface Global {
-      __db: PrismaClient | undefined;
-    }
-  }
 }
 
-// Use `globalThis` instead of `global` for better cross-environment compatibility
 const globalAny: typeof globalThis & { __db?: PrismaClient } = globalThis as any;
 
 let db: PrismaClient;
 
-if (!globalAny.__db) {
-  globalAny.__db = new PrismaClient();
+if (process.env.NODE_ENV === 'test') {
+  db = new PrismaClient({
+    datasources: {
+      db: {
+        url: process.env.DATABASE_URL,
+      },
+    },
+  });
+} else {
+  if (!globalAny.__db) {
+    globalAny.__db = new PrismaClient();
+  }
+  db = globalAny.__db;
 }
-
-db = globalAny.__db;
 
 export { db };
