@@ -1,3 +1,5 @@
+// src/app/inversify.config.ts
+
 import { Container } from 'inversify';
 import { TYPES } from './types/types';
 import { IMicropostsService, IUsersService, IUsersController, IMicropostsController } from './types/interfaces';
@@ -10,12 +12,14 @@ import { db } from '../../prisma/prismaClient';
 
 const container = new Container();
 
-// Bind the PrismaClient instance
+// PrismaClient インスタンスをバインド
 container.bind<PrismaClient>(TYPES.PrismaClient).toConstantValue(db);
 
+// サービスをバインド
 container.bind<IMicropostsService>(TYPES.MicropostsService).to(MicropostsService);
 container.bind<IUsersService>(TYPES.UsersService).to(UsersService);
-// Bind controllers
+
+// コントローラーをバインド
 container.bind<IUsersController>(TYPES.UsersController).to(UsersController);
 container.bind<IMicropostsController>(TYPES.MicropostsController).to(MicropostsController);
 
