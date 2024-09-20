@@ -27,10 +27,15 @@ export class MicropostsService implements IMicropostsService {
         throw new AppError("User not found", StatusCodes.BAD_REQUEST);
       }
 
-      return await db.micropost.create({
+      console.log('Creating micropost:', micropost);
+      const createdMicropost = await db.micropost.create({
         data: micropost,
       });
+      console.log('Created micropost:', createdMicropost);
+
+      return createdMicropost;
     } catch (error) {
+      console.error('Error creating micropost:', error);
       if (error instanceof AppError) {
         throw error;
       }

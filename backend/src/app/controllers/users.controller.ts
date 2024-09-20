@@ -1,4 +1,4 @@
-// backend/src/app/controllers/users.controller.ts
+// src/app/controllers/users.controller.ts
 
 import { injectable, inject } from "inversify";
 import { Request, Response, NextFunction } from "express";

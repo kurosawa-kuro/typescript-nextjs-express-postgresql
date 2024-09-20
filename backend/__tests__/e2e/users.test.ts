@@ -17,14 +17,17 @@ describe('Users E2E Tests', () => {
 
   beforeEach(async () => {
     // Clean up the database before each test
-    await db.micropost.deleteMany();
-    await db.user.deleteMany();
+    await db.$executeRaw`DELETE FROM Micropost`;
+    await db.$executeRaw`DELETE FROM User`;
+    await db.$executeRaw`DELETE FROM sqlite_sequence WHERE name IN ('Micropost', 'User')`;
   });
 
   afterAll(async () => {
     // Final cleanup
-    await db.micropost.deleteMany();
-    await db.user.deleteMany();
+    await db.$executeRaw`DELETE FROM Micropost`;
+    await db.$executeRaw`DELETE FROM User`;
+    await db.$executeRaw`DELETE FROM sqlite_sequence WHERE name IN ('Micropost', 'User')`;
+    await db.$disconnect();
   });
 
   describe('GET /users', () => {
@@ -32,13 +35,14 @@ describe('Users E2E Tests', () => {
       // Create a test user
       await usersService.createOne({
         name: 'Test User',
-        email: 'test@example.com',
+        email: `test${Date.now()}@example.com`,
         password_hash: 'hashedpassword123',
         is_admin: false,
         memo: null
       });
 
       const response = await request(app).get('/users');
+      console.log('GET /users response:', response.body);
       expect(response.status).toBe(StatusCodes.OK);
       expect(Array.isArray(response.body)).toBeTruthy();
       expect(response.body.length).toBeGreaterThan(0);
@@ -54,8 +58,9 @@ describe('Users E2E Tests', () => {
         is_admin: false,
         memo: 'E2E test user'
       };
+    
       const createdUser = await usersService.createOne(newUser);
-
+    
       const response = await request(app).get(`/users/${createdUser.id}`);
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toMatchObject({
@@ -76,7 +81,7 @@ describe('Users E2E Tests', () => {
     it('should create a new user', async () => {
       const newUser = {
         name: 'New User',
-        email: 'new.user.e2e@example.com',
+        email: `new.user.e2e${Date.now()}@example.com`,
         password_hash: 'hashedpassword456',
         is_admin: true,
         memo: 'E2E test new user'
