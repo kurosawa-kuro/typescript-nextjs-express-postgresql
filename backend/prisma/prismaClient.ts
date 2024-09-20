@@ -1,14 +1,13 @@
-// backend/prisma/prismaClient.ts
-
 import { PrismaClient } from "@prisma/client";
 
 declare global {
+  // eslint-disable-next-line no-var
   var __db: PrismaClient | undefined;
 }
 
 let db: PrismaClient;
 
-if (process.env.NODE_ENV === 'test') {
+if (!global.__db) {
   db = new PrismaClient({
     datasources: {
       db: {
@@ -16,10 +15,10 @@ if (process.env.NODE_ENV === 'test') {
       },
     },
   });
+
+  // Store the instance globally to prevent multiple instances in development and test
+  global.__db = db;
 } else {
-  if (!global.__db) {
-    global.__db = new PrismaClient();
-  }
   db = global.__db;
 }
 
