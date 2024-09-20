@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { UsersController } from "../src/app/controllers/users.controller";
 import { IUsersService } from "../src/app/types/interfaces";
 import { AppError } from "../src/app/utils/errorMiddleware";
-import { User } from "../src/app/schemas/users.schema";
+import { User } from "@prisma/client";
 
 // モックのUsersServiceを作成
 const mockUsersService: jest.Mocked<IUsersService> = {
@@ -32,11 +32,14 @@ describe("UsersController", () => {
   describe("get", () => {
     it("should return users data with status 200", async () => {
       const mockUsers: User[] = [{
-        id: "1",
+        id: 1,
         name: "Test User",
-        lastName: "Test",
         email: "test@example.com",
-        birthDate: new Date(),
+        password_hash: "hashedpassword123",
+        is_admin: false,
+        memo: null,
+        created_at: new Date(),
+        updated_at: new Date(),
       }];
       mockUsersService.getData.mockResolvedValue(mockUsers);
 
@@ -60,11 +63,14 @@ describe("UsersController", () => {
   describe("getOne", () => {
     it("should return user data with status 200 when user is found", async () => {
       const mockUser: User = {
-        id: "1",
+        id: 1,
         name: "Test User",
-        lastName: "Test",
         email: "test@example.com",
-        birthDate: new Date(),
+        password_hash: "hashedpassword123",
+        is_admin: false,
+        memo: null,
+        created_at: new Date(),
+        updated_at: new Date(),
       };
       mockUsersService.getOneData.mockResolvedValue(mockUser);
       mockRequest.params = { id: "1" };
@@ -100,14 +106,21 @@ describe("UsersController", () => {
   describe("createOne", () => {
     it("should create user and return with status 201", async () => {
       const mockUser: User = {
-        id: "1",
+        id: 1,
         name: "Test User",
-        lastName: "Test",
         email: "test@example.com",
-        birthDate: new Date(),
+        password_hash: "hashedpassword123",
+        is_admin: false,
+        memo: null,
+        created_at: new Date(),
+        updated_at: new Date(),
       };
       mockUsersService.createOne.mockResolvedValue(mockUser);
-      mockRequest.body = mockUser;
+      mockRequest.body = {
+        name: "Test User",
+        email: "test@example.com",
+        password_hash: "hashedpassword123",
+      };
 
       await usersController.createOne(mockRequest, mockResponse, mockNext);
 
@@ -118,7 +131,11 @@ describe("UsersController", () => {
     it("should call next with AppError when service throws an error", async () => {
       const error = new Error("Test error");
       mockUsersService.createOne.mockRejectedValue(error);
-      mockRequest.body = {} as User;
+      mockRequest.body = {
+        name: "Test User",
+        email: "test@example.com",
+        password_hash: "hashedpassword123",
+      };
 
       await usersController.createOne(mockRequest, mockResponse, mockNext);
 
