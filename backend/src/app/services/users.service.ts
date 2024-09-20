@@ -1,24 +1,26 @@
-// backend/src/app/services/users.service.ts
+// src/app/services/users.service.ts
 
-import { injectable } from "inversify";
-import { User } from "@prisma/client";
-import { IUsersService } from "@/app/types/interfaces";
-import { db } from "../../../prisma/prismaClient";
+import { injectable, inject } from 'inversify';
+import { User, PrismaClient } from '@prisma/client';
+import { IUsersService } from '../types/interfaces';
+import { TYPES } from '../types/types'; // Ensure the import path is correct
 
 @injectable()
 export class UsersService implements IUsersService {
+  constructor(@inject(TYPES.PrismaClient) private db: PrismaClient) {}
+
   public async getData(): Promise<User[]> {
-    return db.user.findMany();
+    return this.db.user.findMany();
   }
 
   public async getOneData(id: string): Promise<User | null> {
-    return db.user.findUnique({
-      where: { id: parseInt(id) },
+    return this.db.user.findUnique({
+      where: { id: parseInt(id, 10) },
     });
   }
 
-  public async createOne(user: Omit<User, "id" | "created_at" | "updated_at">): Promise<User> {
-    return db.user.create({
+  public async createOne(user: Omit<User, 'id' | 'created_at' | 'updated_at'>): Promise<User> {
+    return this.db.user.create({
       data: user,
     });
   }
