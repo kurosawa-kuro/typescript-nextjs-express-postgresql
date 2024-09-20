@@ -1,25 +1,36 @@
 import { PrismaClient } from "@prisma/client";
 
 declare global {
-  // eslint-disable-next-line no-var
-  var __db: PrismaClient | undefined;
+  var prisma: PrismaClient | undefined;
 }
 
-let db: PrismaClient;
-
-if (!global.__db) {
-  db = new PrismaClient({
-    datasources: {
-      db: {
-        url: process.env.DATABASE_URL,
+// テスト環境でのPrismaClientの管理を改善する
+const getPrismaClient = () => {
+  if (process.env.NODE_ENV === "test") {
+    // テストのたびに新しいインスタンスを生成
+    return new PrismaClient({
+      datasources: {
+        db: {
+          url: process.env.DATABASE_URL,
+        },
       },
-    },
-  });
+    });
+  }
 
-  // Store the instance globally to prevent multiple instances in development and test
-  global.__db = db;
-} else {
-  db = global.__db;
+  // 開発環境ではグローバルインスタンスを再利用
+  if (!global.prisma) {
+    global.prisma = new PrismaClient({
+      datasources: {
+        db: {
+          url: process.env.DATABASE_URL,
+        },
+      },
+    });
+  }
+
+  return global.prisma;
 }
+
+const db = getPrismaClient();
 
 export { db };

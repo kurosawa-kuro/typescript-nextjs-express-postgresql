@@ -5,6 +5,9 @@ import { db } from './prisma/prismaClient';
 import { execSync } from 'child_process';
 import { beforeAll, afterAll } from '@jest/globals';
 
+// jest.setup.js
+require('dotenv').config({ path: 'backend/.env.test' });
+
 beforeAll(async () => {
   // テスト用DBのマイグレーションを実行
   execSync('npx prisma migrate deploy', { stdio: 'inherit' });

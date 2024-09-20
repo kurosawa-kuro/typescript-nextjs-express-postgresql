@@ -1,5 +1,3 @@
-// __tests__/e2e/microposts.test.ts
-
 import request from 'supertest';
 import { StatusCodes } from 'http-status-codes';
 import app from '../../src/app/app';
@@ -12,8 +10,6 @@ import { User } from '@prisma/client';
 describe('Microposts E2E Tests', () => {
   let micropostsService: IMicropostsService;
   let usersService: IUsersService;
-  let testUserId: number;  // テストユーザーのIDを保持する変数
-  let testUserEmail: string;  // テストユーザーのメールアドレスを保持する変数
 
   beforeAll(async () => {
     micropostsService = container.get<IMicropostsService>(TYPES.MicropostsService);
@@ -22,40 +18,19 @@ describe('Microposts E2E Tests', () => {
   });
 
   beforeEach(async () => {
-    await db.micropost.deleteMany();
-    await db.user.deleteMany();
-    await db.$executeRaw`DELETE FROM sqlite_sequence WHERE name IN ('Micropost', 'User');`;
-
-    const testUser: User = await db.user.create({
-      data: {
-        name: 'Test User',
-        email: `test${Date.now()}@example.com`,
-        password_hash: 'hashedpassword123',
-        is_admin: false,
-        memo: null,
-      },
-    });
-    testUserId = testUser.id;  // ユーザーのIDを保存
-    testUserEmail = testUser.email;  // ユーザーのメールアドレスを保存
+    await db.$executeRaw`TRUNCATE "User", "Micropost" RESTART IDENTITY CASCADE;`;
   });
+
   afterEach(async () => {
-    await db.$executeRaw`DELETE FROM Micropost`;
-    await db.$executeRaw`DELETE FROM User`;
-    await db.$executeRaw`DELETE FROM sqlite_sequence WHERE name IN ('Micropost', 'User')`;
-    
+    await db.$executeRaw`TRUNCATE "User", "Micropost" RESTART IDENTITY CASCADE;`;
   });
 
   afterAll(async () => {
-    await db.$executeRaw`DELETE FROM Micropost`;
-    await db.$executeRaw`DELETE FROM User`;
-    await db.$executeRaw`DELETE FROM sqlite_sequence WHERE name IN ('Micropost', 'User')`;
     await db.$disconnect();
   });
 
   describe('GET /microposts', () => {
     it('should return all microposts', async () => {
-      console.log('testUserId:', testUserId);
-      console.log('testUserEmail:', testUserEmail);
       const testUser: User = await db.user.create({
         data: {
           name: 'Test User',
@@ -65,23 +40,8 @@ describe('Microposts E2E Tests', () => {
           memo: null,
         },
       });
-      // サービスではなく直接全てのユーザーを取得
-      const users = await db.user.findMany();
-
-      console.log('users:', users);
-
-      const user = await db.user.findUnique({
-        where: { email: testUser.email },
-      });
-      console.log('user:', user);
-
-      if (!user) {
-        throw new Error('User not found');
-      }
-      console.log('user.id:', user.id);
-      const user_id = user.id;
       const result = await micropostsService.createOne({
-        user_id: testUser.id, // テストユーザーのIDを使用
+        user_id: testUser.id,
         title: 'Test Micropost',
         content: 'This is a test micropost',
         image_path: null,
@@ -106,7 +66,7 @@ describe('Microposts E2E Tests', () => {
         },
       });
       const newMicropost = {
-        user_id: testUser.id, // テストユーザーのIDを使用
+        user_id: testUser.id,
         title: 'Specific Micropost',
         content: 'This is a specific micropost for E2E testing',
         image_path: '/images/test.jpg',
@@ -136,7 +96,7 @@ describe('Microposts E2E Tests', () => {
         },
       });
       const newMicropost = {
-        user_id: testUser.id, // テストユーザーのIDを使用
+        user_id: testUser.id,
         title: 'New Micropost',
         content: 'This is a new micropost',
       };
@@ -144,7 +104,6 @@ describe('Microposts E2E Tests', () => {
       const response = await request(app)
         .post('/microposts')
         .send(newMicropost);
-
       expect(response.status).toBe(StatusCodes.CREATED);
       expect(response.body).toMatchObject({
         ...newMicropost,
@@ -154,6 +113,4 @@ describe('Microposts E2E Tests', () => {
       });
     });
   });
-
-  // 他のテストケースも同様に必要に応じて修正
 });

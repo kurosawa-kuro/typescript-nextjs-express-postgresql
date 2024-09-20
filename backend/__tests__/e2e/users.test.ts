@@ -1,5 +1,3 @@
-// __tests__/e2e/users.test.ts
-
 import request from 'supertest';
 import { StatusCodes } from 'http-status-codes';
 import app from '../../src/app/app';
@@ -16,23 +14,16 @@ describe('Users E2E Tests', () => {
   });
 
   beforeEach(async () => {
-    // Clean up the database before each test
-    await db.$executeRaw`DELETE FROM Micropost`;
-    await db.$executeRaw`DELETE FROM User`;
-    await db.$executeRaw`DELETE FROM sqlite_sequence WHERE name IN ('Micropost', 'User')`;
+    await db.$executeRaw`TRUNCATE "User", "Micropost" RESTART IDENTITY CASCADE;`;
   });
 
   afterAll(async () => {
-    // Final cleanup
-    await db.$executeRaw`DELETE FROM Micropost`;
-    await db.$executeRaw`DELETE FROM User`;
-    await db.$executeRaw`DELETE FROM sqlite_sequence WHERE name IN ('Micropost', 'User')`;
+    await db.$executeRaw`TRUNCATE "User", "Micropost" RESTART IDENTITY CASCADE;`;
     await db.$disconnect();
   });
 
   describe('GET /users', () => {
     it('should return all users', async () => {
-      // Create a test user
       await usersService.createOne({
         name: 'Test User',
         email: `test${Date.now()}@example.com`,
@@ -42,7 +33,6 @@ describe('Users E2E Tests', () => {
       });
 
       const response = await request(app).get('/users');
-      console.log('GET /users response:', response.body);
       expect(response.status).toBe(StatusCodes.OK);
       expect(Array.isArray(response.body)).toBeTruthy();
       expect(response.body.length).toBeGreaterThan(0);
@@ -58,9 +48,8 @@ describe('Users E2E Tests', () => {
         is_admin: false,
         memo: 'E2E test user'
       };
-    
+
       const createdUser = await usersService.createOne(newUser);
-    
       const response = await request(app).get(`/users/${createdUser.id}`);
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toMatchObject({
@@ -90,7 +79,6 @@ describe('Users E2E Tests', () => {
       const response = await request(app)
         .post('/users')
         .send(newUser);
-
       expect(response.status).toBe(StatusCodes.CREATED);
       expect(response.body).toMatchObject({
         ...newUser,
@@ -99,7 +87,6 @@ describe('Users E2E Tests', () => {
         updated_at: expect.any(String)
       });
 
-      // Verify the created user can be retrieved
       const getResponse = await request(app).get(`/users/${response.body.id}`);
       expect(getResponse.status).toBe(StatusCodes.OK);
       expect(getResponse.body).toMatchObject(newUser);
@@ -108,14 +95,13 @@ describe('Users E2E Tests', () => {
     it('should return 400 for invalid user data', async () => {
       const invalidUser = {
         name: 'Invalid',
-        email: 'invalid.email', // Invalid email
-        password_hash: 'short', // Too short password hash
+        email: 'invalid.email',  // Invalid email
+        password_hash: 'short',  // Too short password hash
       };
 
       const response = await request(app)
         .post('/users')
         .send(invalidUser);
-
       expect(response.status).toBe(StatusCodes.BAD_REQUEST);
     });
   });

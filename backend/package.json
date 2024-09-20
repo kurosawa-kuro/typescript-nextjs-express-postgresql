@@ -9,8 +9,8 @@
     "build": "tsc",
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:generate": "prisma generate",
-    "prisma:test:migrate": "cross-env DATABASE_URL=file:./test.db npx prisma migrate dev --name init",
-    "test": "cross-env DATABASE_URL=file:./test.db jest --config jest.config.js"
+    "prisma:test:migrate": "cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5432/web_app_db_integration_test?schema=public npx prisma migrate dev --name init",
+    "test": "cross-env DOTENV_CONFIG_PATH=backend/.env.test jest --config jest.config.js"
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
