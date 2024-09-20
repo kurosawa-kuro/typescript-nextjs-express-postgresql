@@ -16,7 +16,7 @@ Content-Type: {{contentType}}
 
 {
     "name": "John Doe",
-    "email": "john.doe1@example.com",
+    "email": "john.doe2@example.com",
     "password_hash": "hashedpassword123",
     "is_admin": false,
     "memo": "New user"

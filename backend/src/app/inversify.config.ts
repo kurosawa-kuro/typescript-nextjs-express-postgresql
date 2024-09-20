@@ -8,12 +8,9 @@ import { UsersService } from './services/users.service';
 import { UsersController } from './controllers/users.controller';
 import { MicropostsController } from './controllers/microposts.controller';
 import { PrismaClient } from '@prisma/client';
-import { db } from '../../prisma/prismaClient';
 
 const container = new Container();
 
-// PrismaClient インスタンスをバインド
-container.bind<PrismaClient>(TYPES.PrismaClient).toConstantValue(db);
 
 // サービスをバインド
 container.bind<IMicropostsService>(TYPES.MicropostsService).to(MicropostsService);

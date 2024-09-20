@@ -10,7 +10,7 @@
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:generate": "prisma generate",
     "prisma:test:migrate": "cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5432/web_app_db_integration_test?schema=public npx prisma migrate dev --name init",
-    "test": "cross-env DOTENV_CONFIG_PATH=backend/.env.test jest --config jest.config.js"
+    "test": "cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5432/web_app_db_integration_test?schema=public jest --config jest.config.js"
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
@@ -19,6 +19,7 @@
     "helmet": "^7.1.0",
     "http-status-codes": "^2.3.0",
     "inversify": "^6.0.2",
+    "pg": "^8.13.0",
     "reflect-metadata": "^0.2.2",
     "supertest": "^7.0.0",
     "uuid": "^10.0.0",
@@ -30,6 +31,7 @@
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.13",
     "@types/node": "^16.18.108",
+    "@types/pg": "^8.11.10",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^10.0.0",
     "cross-env": "^7.0.3",

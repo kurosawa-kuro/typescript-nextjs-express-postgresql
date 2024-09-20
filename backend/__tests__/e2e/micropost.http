@@ -15,7 +15,7 @@ POST {{baseUrl}}/microposts
 Content-Type: {{contentType}}
 
 {
-    "user_id": 1,
+    "user_id": 2,
     "title": "My First Micropost",
     "content": "This is the content of my first micropost.",
     "image_path": "/images/first-post.jpg"

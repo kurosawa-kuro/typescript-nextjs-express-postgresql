@@ -1,27 +1,27 @@
-// src/app/services/users.service.ts
+// backend/src/app/services/users.service.ts
 
-import { injectable, inject } from 'inversify';
-import { User, PrismaClient } from '@prisma/client';
+import { injectable } from 'inversify';
+import { query } from '../config/dbClient';
 import { IUsersService } from '../types/interfaces';
-import { TYPES } from '../types/types'; // Ensure the import path is correct
+import { User } from '@prisma/client';
 
 @injectable()
 export class UsersService implements IUsersService {
-  constructor(@inject(TYPES.PrismaClient) private db: PrismaClient) {}
-
   public async getData(): Promise<User[]> {
-    return this.db.user.findMany();
+    const { rows } = await query('SELECT * FROM "User"'); // Ensure table name is correctly quoted
+    return rows;
   }
 
   public async getOneData(id: string): Promise<User | null> {
-    return this.db.user.findUnique({
-      where: { id: parseInt(id, 10) },
-    });
+    const { rows } = await query('SELECT * FROM "User" WHERE id = $1', [id]);
+    return rows[0] || null;
   }
 
-  public async createOne(user: Omit<User, 'id' | 'created_at' | 'updated_at'>): Promise<User> {
-    return this.db.user.create({
-      data: user,
-    });
+  public async createOne(user: Omit<User, "id" | "created_at" | "updated_at">): Promise<User> {
+    const { rows } = await query(
+      'INSERT INTO "User" (name, email, password_hash, is_admin, memo, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, NOW(), NOW()) RETURNING *',
+      [user.name, user.email, user.password_hash, user.is_admin, user.memo || null] // Ensure all fields are included correctly
+    );
+    return rows[0];
   }
 }

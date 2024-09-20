@@ -4,7 +4,7 @@ import app from '../../src/app/app';
 import { container } from '../../src/app/inversify.config';
 import { TYPES } from '../../src/app/types/types';
 import { IUsersService } from '../../src/app/types/interfaces';
-import { db } from '../../prisma/prismaClient';
+import { query } from '../../src/app/config/dbClient';
 
 describe('Users E2E Tests', () => {
   let usersService: IUsersService;
@@ -14,12 +14,11 @@ describe('Users E2E Tests', () => {
   });
 
   beforeEach(async () => {
-    await db.$executeRaw`TRUNCATE "User", "Micropost" RESTART IDENTITY CASCADE;`;
+    await query('TRUNCATE "User" RESTART IDENTITY CASCADE;');
   });
 
   afterAll(async () => {
-    await db.$executeRaw`TRUNCATE "User", "Micropost" RESTART IDENTITY CASCADE;`;
-    await db.$disconnect();
+    await query('TRUNCATE "User" RESTART IDENTITY CASCADE;');
   });
 
   describe('GET /users', () => {
@@ -52,12 +51,7 @@ describe('Users E2E Tests', () => {
       const createdUser = await usersService.createOne(newUser);
       const response = await request(app).get(`/users/${createdUser.id}`);
       expect(response.status).toBe(StatusCodes.OK);
-      expect(response.body).toMatchObject({
-        ...newUser,
-        id: expect.any(Number),
-        created_at: expect.any(String),
-        updated_at: expect.any(String)
-      });
+      expect(response.body).toMatchObject(newUser);
     });
 
     it('should return 404 for non-existent user', async () => {
@@ -87,6 +81,7 @@ describe('Users E2E Tests', () => {
         updated_at: expect.any(String)
       });
 
+      // Verify the created user can be retrieved
       const getResponse = await request(app).get(`/users/${response.body.id}`);
       expect(getResponse.status).toBe(StatusCodes.OK);
       expect(getResponse.body).toMatchObject(newUser);

@@ -6,7 +6,7 @@ import { User, Micropost } from "@prisma/client";
 export interface IUsersService {
   getData(): Promise<User[]>;
   getOneData(id: string): Promise<User | null>;
-  createOne(user: Omit<User, "id" | "created_at" | "updated_at">): Promise<User>;
+  createOne(user: Omit<User, 'id' | 'created_at' | 'updated_at'>): Promise<User>;
 }
 
 export interface IUsersController {
