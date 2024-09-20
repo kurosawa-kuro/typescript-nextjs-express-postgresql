@@ -3,9 +3,9 @@
 import { injectable, inject } from "inversify";
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
-import { TYPES } from "@/app/types/types";
-import { IUsersService, IUsersController } from "@/app/types/interfaces";
-import { AppError } from "@/app/utils/errorMiddleware";
+import { TYPES } from "../types/types";
+import { IUsersService, IUsersController } from "../types/interfaces";
+import { AppError } from "../utils/errorMiddleware";
 
 @injectable()
 export class UsersController implements IUsersController {
@@ -38,7 +38,11 @@ export class UsersController implements IUsersController {
       const result = await this.usersService.createOne(req.body);
       res.status(StatusCodes.CREATED).json(result);
     } catch (err) {
-      next(new AppError((err as Error).message, StatusCodes.INTERNAL_SERVER_ERROR));
+      if (err instanceof AppError) {
+        next(err);
+      } else {
+        next(new AppError((err as Error).message, StatusCodes.INTERNAL_SERVER_ERROR));
+      }
     }
   }
 }

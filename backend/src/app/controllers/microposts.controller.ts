@@ -3,9 +3,9 @@
 import { injectable, inject } from "inversify";
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
-import { TYPES } from "@/app/types/types";
-import { IMicropostsService, IMicropostsController } from "@/app/types/interfaces";
-import { AppError } from "@/app/utils/errorMiddleware";
+import { TYPES } from "../types/types";
+import { IMicropostsService, IMicropostsController } from "../types/interfaces";
+import { AppError } from "../utils/errorMiddleware";
 
 @injectable()
 export class MicropostsController implements IMicropostsController {

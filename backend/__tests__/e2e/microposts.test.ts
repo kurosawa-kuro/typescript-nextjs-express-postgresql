@@ -46,14 +46,24 @@ describe('Microposts E2E Tests', () => {
   describe('GET /microposts', () => {
     it('should return all microposts', async () => {
       // Create a test micropost
-      await micropostsService.createOne({
+      const testUser = await usersService.createOne({
+        name: 'Test User',
+        email: `test${Date.now()}@example.com`,
+        password_hash: 'hashedpassword123',
+        is_admin: false,
+        memo: null
+      });
+      testUserId = testUser.id;
+      const result = await micropostsService.createOne({
         user_id: testUserId,
         title: 'Test Micropost',
         content: 'This is a test micropost',
         image_path: null
       });
 
+      console.log('Created micropost:', result);
       const response = await request(app).get('/microposts');
+      console.log('GET /microposts response:', response.body);
       expect(response.status).toBe(StatusCodes.OK);
       expect(Array.isArray(response.body)).toBeTruthy();
       expect(response.body.length).toBeGreaterThan(0);
@@ -71,6 +81,7 @@ describe('Microposts E2E Tests', () => {
       const createdMicropost = await micropostsService.createOne(newMicropost);
 
       const response = await request(app).get(`/microposts/${createdMicropost.id}`);
+      console.log('GET /microposts/:id response:', response.body);
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toMatchObject({
         ...newMicropost,
@@ -87,35 +98,25 @@ describe('Microposts E2E Tests', () => {
   });
 
   describe('POST /microposts', () => {
-  // ユーザーを作成してからmicropostを作成するテストケースに修正
-  it('should create a new micropost', async () => {
-    // まず、ユーザーを作成
-    const newUser = {
-      name: 'Test User',
-      email: 'test@example.com',
-      password_hash: 'hashedpassword123'
-    };
-    const userResponse = await request(app).post('/users').send(newUser);
-    const userId = userResponse.body.id;
+    it('should create a new micropost', async () => {
+      const newMicropost = {
+        user_id: testUserId,
+        title: 'Test Micropost',
+        content: 'This is a test micropost'
+      };
 
-    const newMicropost = {
-      user_id: userId,
-      title: 'Test Micropost',
-      content: 'This is a test micropost'
-    };
+      const response = await request(app)
+        .post('/microposts')
+        .send(newMicropost);
 
-    const response = await request(app)
-      .post('/microposts')
-      .send(newMicropost);
-
-    expect(response.status).toBe(StatusCodes.CREATED);
-    expect(response.body).toMatchObject({
-      ...newMicropost,
-      id: expect.any(Number),
-      created_at: expect.any(String),
-      updated_at: expect.any(String)
+      expect(response.status).toBe(StatusCodes.CREATED);
+      expect(response.body).toMatchObject({
+        ...newMicropost,
+        id: expect.any(Number),
+        created_at: expect.any(String),
+        updated_at: expect.any(String)
+      });
     });
-  });
 
     it('should return 400 for invalid micropost data', async () => {
       const invalidMicropost = {

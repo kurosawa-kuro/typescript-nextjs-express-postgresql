@@ -1,38 +1,63 @@
 // src/app/services/microposts.service.ts
 
 import { injectable } from "inversify";
-import { Micropost, Prisma } from "@prisma/client";
-import { IMicropostsService } from "@/app/types/interfaces";
-import { db } from "../../../prisma/prismaClient";
-import { AppError } from "@/app/utils/errorMiddleware";
 import { StatusCodes } from "http-status-codes";
+import { IMicropostsService } from "../types/interfaces";
+import { db } from "../../../prisma/prismaClient";
+import { AppError } from "../utils/errorMiddleware";
+import { Prisma, Micropost } from "@prisma/client";
 
 @injectable()
 export class MicropostsService implements IMicropostsService {
-  public async getData(): Promise<Micropost[]> {
-    return db.micropost.findMany();
-  }
-
-  public async getOneData(id: string): Promise<Micropost | null> {
-    return db.micropost.findUnique({
-      where: { id: parseInt(id) },
-    });
-  }
-
-  public async createOne(micropost: Omit<Micropost, "id" | "created_at" | "updated_at">): Promise<Micropost> {
+  async getData() {
     try {
-      // Check if the user exists
-      const user = await db.user.findUnique({ where: { id: micropost.user_id } });
+      return await db.micropost.findMany();
+    } catch (error) {
+      console.error("Error in getData:", error);
+      throw new AppError("Failed to get microposts", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async getOneData(id: string) {
+    try {
+      const micropost = await db.micropost.findUnique({
+        where: { id: Number(id) },
+      });
+      if (!micropost) {
+        throw new AppError("Micropost not found", StatusCodes.NOT_FOUND);
+      }
+      return micropost;
+    } catch (error) {
+      console.error("Error in getOneData:", error);
+      if (error instanceof AppError) {
+        throw error;
+      }
+      throw new AppError("Failed to get micropost", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async createOne(micropost: Omit<Micropost, "id" | "created_at" | "updated_at">): Promise<Micropost> {
+    try {
+      // user_idを確実に整数に変換
+      const userId = Number(micropost.user_id);
+      if (isNaN(userId)) {
+        throw new AppError("Invalid user_id", StatusCodes.BAD_REQUEST);
+      }
+
+      // Check if the user exists before creating the micropost
+      const user = await db.user.findUnique({
+        where: { id: userId },
+      });
+
       if (!user) {
         throw new AppError("User not found", StatusCodes.BAD_REQUEST);
       }
 
-      console.log('Creating micropost:', micropost);
+      console.log('Creating micropost:', { ...micropost, user_id: userId });
       const createdMicropost = await db.micropost.create({
-        data: micropost,
+        data: { ...micropost, user_id: userId },
       });
       console.log('Created micropost:', createdMicropost);
-
       return createdMicropost;
     } catch (error) {
       console.error('Error creating micropost:', error);
