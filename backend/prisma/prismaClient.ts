@@ -1,10 +1,10 @@
+// backend/prisma/prismaClient.ts
+
 import { PrismaClient } from "@prisma/client";
 
 declare global {
   var __db: PrismaClient | undefined;
 }
-
-const globalAny: typeof globalThis & { __db?: PrismaClient } = globalThis as any;
 
 let db: PrismaClient;
 
@@ -17,10 +17,10 @@ if (process.env.NODE_ENV === 'test') {
     },
   });
 } else {
-  if (!globalAny.__db) {
-    globalAny.__db = new PrismaClient();
+  if (!global.__db) {
+    global.__db = new PrismaClient();
   }
-  db = globalAny.__db;
+  db = global.__db;
 }
 
 export { db };

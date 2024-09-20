@@ -10,8 +10,7 @@
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:generate": "prisma generate",
     "prisma:test:migrate": "cross-env DATABASE_URL=file:./test.db npx prisma migrate dev --name init",
-    "test": "jest --config jest.config.js",
-    "test:e2e": "cross-env DATABASE_URL=file:./test.db jest --config jest.config.js --testPathPattern=e2e"
+    "test": "cross-env DATABASE_URL=file:./test.db jest --config jest.config.js"
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
