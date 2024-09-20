@@ -15,8 +15,15 @@ describe('Users E2E Tests', () => {
     usersService = container.get<IUsersService>(TYPES.UsersService);
   });
 
-  afterEach(async () => {
-    // Clean up the database after each test
+  beforeEach(async () => {
+    // Clean up the database before each test
+    await db.micropost.deleteMany();
+    await db.user.deleteMany();
+  });
+
+  afterAll(async () => {
+    // Final cleanup
+    await db.micropost.deleteMany();
     await db.user.deleteMany();
   });
 

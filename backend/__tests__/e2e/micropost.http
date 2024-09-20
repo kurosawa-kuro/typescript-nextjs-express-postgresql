@@ -1,0 +1,76 @@
+### Variables
+@baseUrl = http://localhost:3000
+@contentType = application/json
+
+### Get all microposts
+GET {{baseUrl}}/microposts
+Content-Type: {{contentType}}
+
+### Get a specific micropost
+GET {{baseUrl}}/microposts/1
+Content-Type: {{contentType}}
+
+### Create a new micropost
+POST {{baseUrl}}/microposts
+Content-Type: {{contentType}}
+
+{
+    "user_id": 1,
+    "title": "My First Micropost",
+    "content": "This is the content of my first micropost.",
+    "image_path": "/images/first-post.jpg"
+}
+
+### Invalid request - Get micropost with invalid ID
+GET {{baseUrl}}/microposts/invalid
+Content-Type: {{contentType}}
+
+### Invalid request - Create micropost with missing required fields
+POST {{baseUrl}}/microposts
+Content-Type: {{contentType}}
+
+{
+    "user_id": 1,
+    "title": "Incomplete Micropost"
+}
+
+### Invalid request - Create micropost with invalid user_id
+POST {{baseUrl}}/microposts
+Content-Type: {{contentType}}
+
+{
+    "user_id": "invalid",
+    "title": "Invalid User Micropost",
+    "content": "This micropost has an invalid user_id."
+}
+
+### Invalid request - Create micropost with empty title
+POST {{baseUrl}}/microposts
+Content-Type: {{contentType}}
+
+{
+    "user_id": 1,
+    "title": "",
+    "content": "This micropost has an empty title."
+}
+
+### Valid request - Create micropost with all fields including optional ones
+POST {{baseUrl}}/microposts
+Content-Type: {{contentType}}
+
+{
+    "user_id": 1,
+    "title": "Complete Micropost",
+    "content": "This is a complete micropost with all fields.",
+    "image_path": "/images/complete-post.jpg"
+}
+
+### Valid request - Create micropost without optional image_path
+POST {{baseUrl}}/microposts
+Content-Type: {{contentType}}
+
+{
+    "user_id": 2,
+    "title": "Micropost without Image",
+    "content": "This micropost doesn't have an image."
+}
