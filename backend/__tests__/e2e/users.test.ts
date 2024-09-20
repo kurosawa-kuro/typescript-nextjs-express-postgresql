@@ -6,7 +6,6 @@ import app from '../../src/app/app';
 import { container } from '../../src/app/inversify.config';
 import { TYPES } from '../../src/app/types/types';
 import { IUsersService } from '../../src/app/types/interfaces';
-import { User } from '@prisma/client';
 import { db } from '../../prisma/prismaClient';
 
 describe('Users E2E Tests', () => {
