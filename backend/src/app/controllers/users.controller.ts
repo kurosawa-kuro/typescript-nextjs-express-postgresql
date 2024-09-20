@@ -5,7 +5,6 @@ import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 import { TYPES } from "@/app/types/types";
 import { IUsersService, IUsersController } from "@/app/types/interfaces";
-import { User } from "@prisma/client";
 import { AppError } from "@/app/utils/errorMiddleware";
 
 @injectable()

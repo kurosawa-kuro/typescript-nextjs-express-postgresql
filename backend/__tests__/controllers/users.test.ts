@@ -1,9 +1,9 @@
 // backend/__tests__/users.controller.test.ts
 
 import { StatusCodes } from "http-status-codes";
-import { UsersController } from "../src/app/controllers/users.controller";
-import { IUsersService } from "../src/app/types/interfaces";
-import { AppError } from "../src/app/utils/errorMiddleware";
+import { UsersController } from "../../src/app/controllers/users.controller";
+import { IUsersService } from "../../src/app/types/interfaces";
+import { AppError } from "../../src/app/utils/errorMiddleware";
 import { User } from "@prisma/client";
 
 // モックのUsersServiceを作成

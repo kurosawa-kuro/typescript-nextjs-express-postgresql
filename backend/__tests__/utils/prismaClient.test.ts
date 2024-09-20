@@ -25,7 +25,7 @@ describe('PrismaClient initialization', () => {
     process.env.NODE_ENV = 'test';
     process.env.DATABASE_URL = 'test_database_url';
     
-    const { db } = require('../prisma/prismaClient');
+    const { db } = require('../../prisma/prismaClient');
     
     expect(mockPrismaClient).toHaveBeenCalledWith({
       datasources: {
@@ -41,7 +41,7 @@ describe('PrismaClient initialization', () => {
   it('should create a new PrismaClient instance if global.__db is undefined', () => {
     process.env.NODE_ENV = 'development';
     
-    const { db } = require('../prisma/prismaClient');
+    const { db } = require('../../prisma/prismaClient');
     
     expect(mockPrismaClient).toHaveBeenCalledWith();
     expect(db).toBeInstanceOf(mockPrismaClient);
