@@ -1,25 +1,20 @@
-// backend/src/app/routes/users.route.ts
-
-import { Router } from "express";
-import { container } from "@/app/inversify.config";
-import { TYPES } from "@/app/types/types";
-import { IUsersController } from "@/app/types/interfaces";
+import { Router, Request, Response, NextFunction } from "express";
+import { usersController } from "@/app/app";
 import validationMiddleware from "@/app/utils/validation.middleware";
 import { usersSchemaCreate, usersSchemaGet } from "@/app/schemas/users.schema";
 
 const router = Router();
-const usersController = container.get<IUsersController>(TYPES.UsersController);
 
-router.get("/", usersController.get.bind(usersController));
+router.get("/", (req: Request, res: Response, next: NextFunction) => usersController.get(req, res, next));
 router.get(
   "/:id",
   [validationMiddleware(usersSchemaGet)],
-  usersController.getOne.bind(usersController)
+  (req: Request, res: Response, next: NextFunction) => usersController.getOne(req, res, next)
 );
 router.post(
   "/",
   [validationMiddleware(usersSchemaCreate)],
-  usersController.createOne.bind(usersController)
+  (req: Request, res: Response, next: NextFunction) => usersController.createOne(req, res, next)
 );
 
 export default router;

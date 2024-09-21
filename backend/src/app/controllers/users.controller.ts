@@ -1,15 +1,10 @@
-// src/app/controllers/users.controller.ts
-
-import { injectable, inject } from "inversify";
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
-import { TYPES } from "../types/types";
 import { IUsersService, IUsersController } from "../types/interfaces";
 import { AppError } from "../utils/errorMiddleware";
 
-@injectable()
 export class UsersController implements IUsersController {
-  constructor(@inject(TYPES.UsersService) private usersService: IUsersService) {}
+  constructor(private usersService: IUsersService) {}
 
   public async get(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {

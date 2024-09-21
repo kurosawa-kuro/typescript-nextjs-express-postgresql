@@ -1,15 +1,10 @@
-// src/app/controllers/microposts.controller.ts
-
-import { injectable, inject } from "inversify";
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
-import { TYPES } from "../types/types";
 import { IMicropostsService, IMicropostsController } from "../types/interfaces";
 import { AppError } from "../utils/errorMiddleware";
 
-@injectable()
 export class MicropostsController implements IMicropostsController {
-  constructor(@inject(TYPES.MicropostsService) private micropostsService: IMicropostsService) {}
+  constructor(private micropostsService: IMicropostsService) {}
 
   public async get(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {

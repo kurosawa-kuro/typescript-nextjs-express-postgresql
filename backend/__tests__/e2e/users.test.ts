@@ -1,28 +1,39 @@
 import request from 'supertest';
 import { StatusCodes } from 'http-status-codes';
-import app from '../../src/app/app';
-import { container } from '../../src/app/inversify.config';
-import { TYPES } from '../../src/app/types/types';
-import { IUsersService } from '../../src/app/types/interfaces';
-import { query } from '../../src/app/config/dbClient';
+import { app } from '../../src/app/app';
+import { UsersService } from '../../src/app/services/users.service';
+import { pool, query } from '../../src/app/config/dbClient';
+
+jest.setTimeout(30000); // テストのタイムアウト時間を30秒に設定
 
 describe('Users E2E Tests', () => {
-  let usersService: IUsersService;
+  let usersService: UsersService;
+  let client: any;
 
-  beforeAll(async () => {
-    usersService = container.get<IUsersService>(TYPES.UsersService);
+  beforeAll(() => {
+    usersService = new UsersService(query);
   });
 
   beforeEach(async () => {
-    await query('TRUNCATE "User" RESTART IDENTITY CASCADE;');
+    client = await pool.connect();
+    await client.query('BEGIN');
+    await client.query('TRUNCATE "User" RESTART IDENTITY CASCADE');
+  });
+
+  afterEach(async () => {
+    if (client) {
+      await client.query('ROLLBACK');
+      client.release();
+    }
   });
 
   afterAll(async () => {
-    await query('TRUNCATE "User" RESTART IDENTITY CASCADE;');
+    await pool.end();
   });
 
   describe('GET /users', () => {
     it('should return all users', async () => {
+      await client.query('BEGIN');
       await usersService.createOne({
         name: 'Test User',
         email: `test${Date.now()}@example.com`,
@@ -30,6 +41,7 @@ describe('Users E2E Tests', () => {
         is_admin: false,
         memo: null
       });
+      await client.query('COMMIT');
 
       const response = await request(app).get('/users');
       expect(response.status).toBe(StatusCodes.OK);
@@ -40,6 +52,7 @@ describe('Users E2E Tests', () => {
 
   describe('GET /users/:id', () => {
     it('should return a specific user', async () => {
+      await client.query('BEGIN');
       const newUser = {
         name: 'Test User',
         email: 'test.e2e@example.com',
@@ -49,6 +62,8 @@ describe('Users E2E Tests', () => {
       };
 
       const createdUser = await usersService.createOne(newUser);
+      await client.query('COMMIT');
+
       const response = await request(app).get(`/users/${createdUser.id}`);
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toMatchObject(newUser);

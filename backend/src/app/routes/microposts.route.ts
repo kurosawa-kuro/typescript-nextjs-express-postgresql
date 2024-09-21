@@ -1,25 +1,20 @@
-// src/app/routes/microposts.route.ts
-
-import { Router } from "express";
-import { container } from "@/app/inversify.config";
-import { TYPES } from "@/app/types/types";
-import { IMicropostsController } from "@/app/types/interfaces";
+import { Router, Request, Response, NextFunction } from "express";
+import { micropostsController } from "@/app/app";
 import validationMiddleware from "@/app/utils/validation.middleware";
 import { micropostsSchemaCreate, micropostsSchemaGet } from "@/app/schemas/microposts.schema";
 
 const router = Router();
-const micropostsController = container.get<IMicropostsController>(TYPES.MicropostsController);
 
-router.get("/", micropostsController.get.bind(micropostsController));
+router.get("/", (req: Request, res: Response, next: NextFunction) => micropostsController.get(req, res, next));
 router.get(
   "/:id",
   [validationMiddleware(micropostsSchemaGet)],
-  micropostsController.getOne.bind(micropostsController)
+  (req: Request, res: Response, next: NextFunction) => micropostsController.getOne(req, res, next)
 );
 router.post(
   "/",
   [validationMiddleware(micropostsSchemaCreate)],
-  micropostsController.createOne.bind(micropostsController)
+  (req: Request, res: Response, next: NextFunction) => micropostsController.createOne(req, res, next)
 );
 
 export default router;

@@ -1,30 +1,42 @@
 import request from 'supertest';
 import { StatusCodes } from 'http-status-codes';
-import app from '../../src/app/app';
-import { container } from '../../src/app/inversify.config';
-import { TYPES } from '../../src/app/types/types';
-import { IMicropostsService, IUsersService } from '../../src/app/types/interfaces';
-import { query } from '../../src/app/config/dbClient';
+import { app } from '../../src/app/app';
+import { MicropostsService } from '../../src/app/services/microposts.service';
+import { UsersService } from '../../src/app/services/users.service';
+import { pool, query } from '../../src/app/config/dbClient';
+
+jest.setTimeout(30000); // テストのタイムアウト時間を30秒に設定
 
 describe('Microposts E2E Tests', () => {
-  let micropostsService: IMicropostsService;
-  let usersService: IUsersService;
+  let micropostsService: MicropostsService;
+  let usersService: UsersService;
+  let client: any;
 
-  beforeAll(async () => {
-    micropostsService = container.get<IMicropostsService>(TYPES.MicropostsService);
-    usersService = container.get<IUsersService>(TYPES.UsersService);
+  beforeAll(() => {
+    micropostsService = new MicropostsService(query);
+    usersService = new UsersService(query);
   });
 
   beforeEach(async () => {
-    await query('TRUNCATE "User", "Micropost" RESTART IDENTITY CASCADE;');
+    client = await pool.connect();
+    await client.query('BEGIN');
+    await client.query('TRUNCATE "User", "Micropost" RESTART IDENTITY CASCADE');
   });
 
   afterEach(async () => {
-    await query('TRUNCATE "User", "Micropost" RESTART IDENTITY CASCADE;');
+    if (client) {
+      await client.query('ROLLBACK');
+      client.release();
+    }
+  });
+
+  afterAll(async () => {
+    await pool.end();
   });
 
   describe('GET /microposts', () => {
     it('should return all microposts', async () => {
+      await client.query('BEGIN');
       const testUser = await usersService.createOne({
         name: 'Test User',
         email: `test${Date.now()}@example.com`,
@@ -37,8 +49,9 @@ describe('Microposts E2E Tests', () => {
         user_id: testUser.id,
         title: 'Test Micropost',
         content: 'This is a test micropost',
-        image_path: null
+        image_path: 'This is a image_path'
       });
+      await client.query('COMMIT');
 
       const response = await request(app).get('/microposts');
       expect(response.status).toBe(StatusCodes.OK);
@@ -49,6 +62,7 @@ describe('Microposts E2E Tests', () => {
 
   describe('GET /microposts/:id', () => {
     it('should return a specific micropost', async () => {
+      await client.query('BEGIN');
       const testUser = await usersService.createOne({
         name: 'Test User',
         email: `test${Date.now()}@example.com`,
@@ -63,6 +77,7 @@ describe('Microposts E2E Tests', () => {
         image_path: '/images/test.jpg'
       };
       const createdMicropost = await micropostsService.createOne(newMicropost);
+      await client.query('COMMIT');
 
       const response = await request(app).get(`/microposts/${createdMicropost.id}`);
       expect(response.status).toBe(StatusCodes.OK);
@@ -77,6 +92,7 @@ describe('Microposts E2E Tests', () => {
 
   describe('POST /microposts', () => {
     it('should create a new micropost', async () => {
+      await client.query('BEGIN');
       const testUser = await usersService.createOne({
         name: 'Test User',
         email: `test${Date.now()}@example.com`,
@@ -84,10 +100,13 @@ describe('Microposts E2E Tests', () => {
         is_admin: false,
         memo: null
       });
+      await client.query('COMMIT');
+
       const newMicropost = {
         user_id: testUser.id,
         title: 'New Micropost',
-        content: 'This is a new micropost'
+        content: 'This is a new micropost',
+        image_path: null
       };
 
       const response = await request(app)

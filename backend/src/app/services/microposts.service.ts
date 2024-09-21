@@ -1,15 +1,23 @@
-// src/app/services/microposts.service.ts
-
-import { injectable } from 'inversify';
-import { query } from '../config/dbClient';
 import { StatusCodes } from 'http-status-codes';
 import { AppError } from '../utils/errorMiddleware';
+import { QueryResult } from 'pg';
 
-@injectable()
+interface Micropost {
+  id: number;
+  user_id: number;
+  title: string;
+  content: string;
+  image_path: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
 export class MicropostsService {
-  async getData() {
+  constructor(private query: (text: string, params?: any[]) => Promise<QueryResult>) {}
+
+  async getData(): Promise<Micropost[]> {
     try {
-      const { rows } = await query('SELECT * FROM "Micropost"');
+      const { rows } = await this.query('SELECT * FROM "Micropost"');
       return rows;
     } catch (error) {
       console.error('Error in getData:', error);
@@ -17,11 +25,11 @@ export class MicropostsService {
     }
   }
 
-  async getOneData(id: string) {
+  async getOneData(id: string): Promise<Micropost | null> {
     try {
-      const { rows } = await query('SELECT * FROM "Micropost" WHERE id = $1', [id]);
+      const { rows } = await this.query('SELECT * FROM "Micropost" WHERE id = $1', [id]);
       if (rows.length === 0) {
-        throw new AppError('Micropost not found', StatusCodes.NOT_FOUND);
+        return null;
       }
       return rows[0];
     } catch (error) {
@@ -30,9 +38,9 @@ export class MicropostsService {
     }
   }
 
-  async createOne(micropost: { user_id: number; title: string; content: string; image_path: string }) {
+  async createOne(micropost: Omit<Micropost, "id" | "created_at" | "updated_at">): Promise<Micropost> {
     try {
-      const { rows } = await query(
+      const { rows } = await this.query(
         'INSERT INTO "Micropost" (user_id, title, content, image_path, created_at, updated_at) VALUES ($1, $2, $3, $4, NOW(), NOW()) RETURNING *',
         [micropost.user_id, micropost.title, micropost.content, micropost.image_path]
       );
